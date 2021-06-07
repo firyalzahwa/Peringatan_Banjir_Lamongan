@@ -43,9 +43,10 @@ class LandheightsController extends Controller
      */
     public function store(Request $request,Landheight $landheight)
     {
-        $landheight->village_id = $request->village_id;
-        $landheight->total = $request->total;
-        $landheight->save();
+        Landheight::create([
+                'village_id' => $request->village_id,
+                'total' => $request->total
+        ]);
         return redirect()->route('admin.landheights.index');
     }
 

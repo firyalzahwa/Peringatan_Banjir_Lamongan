@@ -40,7 +40,7 @@
                 @if(count($landheights))
                 @foreach ($landheights as $l)
                 <tr>
-                  <td>{{ $l->village->title}}</td>
+                  <td>{{ $l->village['title']}}</td>
                   <td>{{ $l->total}}</td>
                   <td>
                     <a href="{{ route('admin.landheights.edit', $l->id) }}" class="btn btn-primary btn-sm"><i class="fas fa-edit mr-2"></i>Edit </a>

@@ -37,10 +37,11 @@
                 </tr>
               </thead>
               <tbody>
-                @if(count($populations))
-                @foreach ($populations as $p)
+                @if(count($population))
+                @foreach ($population as $p)
                 <tr>
-                  <td>{{ $p->village->title}}</td>
+                
+                  <td>{{ $p->procedure['title']}}</td>
                   <td>{{ $p->total}}</td>
                   <td>
                     <a href="{{ route('admin.populations.edit', $p->id) }}" class="btn btn-primary btn-sm"><i class="fas fa-edit mr-2"></i>Edit </a>
@@ -57,7 +58,7 @@
                 @endif
               </tbody>
             </table>
-            {{ $populations->render() }}
+            {{ $population->render() }}
           </div>
           <!-- /.card-body -->
         </div>

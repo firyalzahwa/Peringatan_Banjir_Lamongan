@@ -8,7 +8,6 @@ use GuzzleHttp\Client;
 class Village extends Model
 {
     public $timestamps = false;
-
     protected $table = 'villages';
 
     protected $appends = [

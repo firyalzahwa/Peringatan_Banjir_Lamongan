@@ -21,6 +21,7 @@ class ReservoirsController extends Controller
     public function index()
     {
         $reservoirs = Reservoir::orderBy('id','DESC')->paginate(10);
+        //dd($reservoirs);
         return view('admin.reservoirs.index', compact('reservoirs'));
     }
 

@@ -20,8 +20,8 @@ class PopulationsController extends Controller
      */
     public function index()
     {
-        $populations = Population::orderBy('id','DESC')->paginate(10);
-        return view('admin.populations.index', compact('populations'));
+        $population = Population::orderBy('id','DESC')->with('procedure')->paginate(10);
+        return view('admin.populations.index', compact('population'));
     }
 
     /**

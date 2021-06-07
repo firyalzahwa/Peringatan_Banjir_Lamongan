@@ -15,12 +15,14 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', function () {
+	Auth::logout();
     return view('welcome');
 });
 
 Auth::routes();
 
 Route::get('/admin', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/admin/map/petabanjir', 'Admin\VisualisasiMapController@get_petabanjir');
 // Route::get('/admin/map/rawanbanjir', 'Admin\VisualisasiMapController@get_rawanbanjir')->name('map.rawanbanjir');
 
