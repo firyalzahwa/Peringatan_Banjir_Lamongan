@@ -32,15 +32,17 @@ var kecamatanlayer = new L.GeoJSON.AJAX("https://gevalinda.github.io/desa_lamong
     }
 });
 
+kecamatanlayer.addTo(map);
+
 //Menampilka Layer Desa
-document.getElementById("dataid1").addEventListener("change", function() {
-    if (document.getElementById(this.id).checked == true) {
-        document.getElementById('titleMode').innerText = 'Peta Desa Lamongan';
-        desalayer.addTo(map);
-    } else {
-        desalayer.remove(map);
-    }
-});
+// document.getElementById("dataid1").addEventListener("change", function() {
+//     if (document.getElementById(this.id).checked == true) {
+//         document.getElementById('titleMode').innerText = 'Peta Desa Lamongan';
+//         desalayer.addTo(map);
+//     } else {
+//         desalayer.remove(map);
+//     }
+// });
 
 //Menampilka Layer Kecamatan
 document.getElementById("dataid2").addEventListener("change", function() {

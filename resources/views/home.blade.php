@@ -55,6 +55,9 @@
                   <script src="{{asset('js/kecamatan.js') }}"></script>
                   <script src="{{ asset('js/leaflet.ajax.min.js') }}"></script>
                   <script src="{{ asset('js/map.js') }}"></script>
+                  <script>
+                    kecamatanLayer.addTo(map);
+                  </script>
                 </div>
                 <!-- /.chart-responsive -->
               </div>

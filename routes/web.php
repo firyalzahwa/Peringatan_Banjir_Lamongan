@@ -37,3 +37,5 @@ Route::resource('/admin/procedures', 'Admin\ProceduresController', ['as' => 'adm
 Route::resource('/admin/rivers', 'Admin\RiversController', ['as' => 'admin']);
 Route::resource('/admin/weathers', 'Admin\WeathersController', ['as' => 'admin']);
 
+Route::get('/ahp', 'Admin\AHPController@perhitunganAHP');
+
