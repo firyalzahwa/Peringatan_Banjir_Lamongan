@@ -31,7 +31,7 @@
             <table class="table table-hover text-nowrap">
               <thead>
                 <tr>
-                  <th>Nama Desa</th>
+                  <th>Nama Kecamatan</th>
                   <th>Kepadatan Penduduk</th>
                   <th>Aksi</th>
                 </tr>
@@ -41,7 +41,7 @@
                 @foreach ($population as $p)
                 <tr>
                 
-                  <td>{{ $p->procedure['title']}}</td>
+                  <td>{{ $p->district->title}}</td>
                   <td>{{ $p->total}}</td>
                   <td>
                     <a href="{{ route('admin.populations.edit', $p->id) }}" class="btn btn-primary btn-sm"><i class="fas fa-edit mr-2"></i>Edit </a>

@@ -25,20 +25,14 @@
             <h4 class="text-dark" id="titleMode">Peta Lamongan</h4>
             <div class="card-tools">
               <div class="col">
-                <div class="dropdown">
-                  <button type="button" class="btn btn-s btn-info dropdown-toggle" data-toggle="dropdown">
-                    Pilih peta yang ditampilkan
-                  </button>
-                  <div class="dropdown-menu" style="width: 100%">
-                    <div class="checkbox dropdown-item"><label><input type="checkbox" id="dataid1" > Peta Desa</label></div>
-                    <div class="checkbox dropdown-item"><label><input type="checkbox" id="dataid2" > Peta Kecamatan</label></div> 
-                    {{-- <div class="checkbox dropdown-item"><label><input type="checkbox" id="dataid3" > Peta Tinggi Tanah</label></div>  --}}
-                    <div class="checkbox dropdown-item"><label><input type="checkbox" id="dataid4" > Peta Riwayat Banjir</label></div>
-                    <div class="checkbox dropdown-item"><label><input type="checkbox" id="dataid5" > Peta Rawan Banjir</label></div> 
-                    {{-- <div class="checkbox dropdown-item"><label><input type="checkbox" id="dataid6" > Peta Tinggi Tanah</label></div> 
-                    <div class="checkbox dropdown-item"><label><input type="checkbox" id="dataid7" > Peta Kepadatan Penduduk</label></div> 
-                    <div class="checkbox dropdown-item"><label><input type="checkbox" id="dataid8" > Peta Waduk</label></div>  --}}
-                  </div>
+                <div class="form-group">
+                  <label for="exampleFormControlSelect1">Pilih Peta</label>
+                  <select class="form-control" id="select-pilih-peta">
+                    <option>Pilih Data</option>
+                    <option data-url="{{route('fahp')}}">peta rawan Fahp</option>
+                    <option data-url="{{route('ahp')}}">peta rawan AHP</option>
+                    <option data-url="{{route('histoty_map')}}">peta riwayat</option>
+                  </select>
                 </div>
               </div>
             </div>         
@@ -52,11 +46,13 @@
                 </p> --}}
                 
                 <div id="mapid" style="width: 100%; height: 600px">
-                  <script src="{{asset('js/kecamatan.js') }}"></script>
+                  <script>
+                  </script>
                   <script src="{{ asset('js/leaflet.ajax.min.js') }}"></script>
+                  <script src="{{ asset('js/kecamatan_json.js') }}"></script>
                   <script src="{{ asset('js/map.js') }}"></script>
                   <script>
-                    kecamatanLayer.addTo(map);
+                    // kecamatanLayer.addTo(map);
                   </script>
                 </div>
                 <!-- /.chart-responsive -->

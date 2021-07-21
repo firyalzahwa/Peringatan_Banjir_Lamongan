@@ -196,7 +196,7 @@
                                         <li class="nav-item">
                                             <a href="{{ route('admin.rivers.index') }}" class="nav-link ">
                                                 <i class="fas fa-circle nav-icon"></i>
-                                                <p>Tinggi Air Sungai</p>
+                                                <p>Data Sungai</p>
                                             </a>
                                         </li>
                                         <li class="nav-item">

@@ -5,12 +5,12 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1 class="m-0 text-dark">Halaman Ketinggian Sungai</h1>
+        <h1 class="m-0 text-dark">Halaman Sungai</h1>
       </div><!-- /.col -->
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="{{url ('/admin') }}">Dashboard</a></li>
-          <li class="breadcrumb-item active">Ketinggian Sungai</li>
+          <li class="breadcrumb-item active"> Sungai</li>
         </ol>
       </div><!-- /.col -->
     </div><!-- /.row -->
@@ -34,25 +34,25 @@
             <table class="table table-hover text-nowrap">
               <thead>
                 <tr>
-                  <th>Lokasi Sungai</th>
-                  <th>Tanggal</th>
-                  <th>Tinggi (cm)</th>
+                  <th>ID Dist</th>
+                  <th>Lokasi</th>
+                  <th>Tinggi Sungai (m)</th>
                   {{-- <th>Kategori Tinggi</th> --}}
                   <th>Aksi</th>
                 </tr>
               </thead>
               <tbody>
-                @if(count($rivers))
-                @foreach ($rivers as $r)
+                @if(count($river))
+                @foreach ($river as $r)
                 <tr>
-                  <td>{{ $r->district->title}}</td>
-                  <td>{{ $r->tanggal}}</td>                    
-                  <td>{{ $r->tinggi}}</td>
+                  <td>{{ $r->id_dist}}</td>
+                  <td>{{ $r->kecamatan}}</td>                    
+                  <td>{{ $r->jum_sungai}}</td>
                   {{-- <td>{{ $r->river_category}}</td> --}}
                   <td>
-                    <a href="{{ route('admin.rivers.edit', $r->id) }}" class="btn btn-primary btn-sm"><i class="fas fa-edit mr-2"></i>Edit </a>
-                    <a href="javascript:void(0)" onclick="$(this).parent().find('form').submit()" class="btn btn-secondary btn-sm"><i class="fas fa-trash-alt mr-2"></i>Delete</a>
-                    <form action="{{ route('admin.rivers.destroy', $r->id) }}" method="POST">
+                    <a href="#" class="btn btn-primary btn-sm"><i class="fas fa-edit mr-2"></i>Edit </a>
+                    <a href="#" onclick="$(this).parent().find('form').submit()" class="btn btn-secondary btn-sm"><i class="fas fa-trash-alt mr-2"></i>Delete</a>
+                    <form action="#" method="POST">
                       @method('DELETE')
                       <input type="hidden" name="_token" value="{{ csrf_token()}} ">
                     </form>
@@ -64,7 +64,7 @@
                 @endif
               </tbody>
             </table>
-            {{ $rivers->render() }}
+            {{ $river->render() }}
           </div>
           <!-- /.card-body -->
         </div>

@@ -48,7 +48,7 @@
                 @foreach ($villages as $v)
                 <tr>
                   <td>{{ $v->title}}</td>
-                  <td>{{ $v->district->title}}</td>
+                  <td>{{ $v->district_id}}</td>
                   <td>{{ $v->histories->count() }}</td>
                   <td>{{ $v->long_villages}}</td>
                   <td>{{ $v->lat_villages}}</td>

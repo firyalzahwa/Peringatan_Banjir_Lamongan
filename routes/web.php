@@ -37,5 +37,9 @@ Route::resource('/admin/procedures', 'Admin\ProceduresController', ['as' => 'adm
 Route::resource('/admin/rivers', 'Admin\RiversController', ['as' => 'admin']);
 Route::resource('/admin/weathers', 'Admin\WeathersController', ['as' => 'admin']);
 
-Route::get('/ahp', 'Admin\AHPController@perhitunganAHP');
+
+Route::get('/histori', 'Admin\HistoriesController@history_map')->name('histoty_map');;
+Route::get('/ahp', 'Admin\AHPController@perhitunganAHP')->name('ahp');;
+Route::get('/fahp', 'Admin\FAhpController@fahp')->name('fahp');
+Route::get('/get_json_fahp', 'Admin\FAhpController@get_json')->name('get_json_fahp');
 

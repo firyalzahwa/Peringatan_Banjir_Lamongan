@@ -23,6 +23,7 @@ class ProceduresController extends Controller
         $sop->map(function ($sop) {
             return $sop->detail_procedure;
         });
+        // dd($sop[0]->detail_procedure);
 
         return view('admin.procedures.index', ['data' => $sop]);
     }
