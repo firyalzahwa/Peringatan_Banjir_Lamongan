@@ -38,22 +38,19 @@
             </div>         
           </div>
           <!-- /.card-header -->
-          <div class="card-body" id="divMap">
+          <div class="card-body" id="">
             <div class="row">
               <div class="col-md-12">
-                {{-- <p class="text-center">
-                  <strong>Sales: 1 Jan, 2014 - 30 Jul, 2014</strong>
-                </p> --}}
-                
-                <div id="mapid" style="width: 100%; height: 600px">
-                  <script>
-                  </script>
-                  <script src="{{ asset('js/leaflet.ajax.min.js') }}"></script>
-                  <script src="{{ asset('js/kecamatan_json.js') }}"></script>
-                  <script src="{{ asset('js/map.js') }}"></script>
-                  <script>
-                    // kecamatanLayer.addTo(map);
-                  </script>
+                <div id="mapid" style="width: 100%; height: 600px"></div>
+                <div class="map-overlay" id="features">
+                  <h2>Kecamatan Kabupaten Lamongan</h2>
+                  <div id="pd"><p>Hover over a state!</p></div>
+                </div>
+                <div class="map-overlay" id="legend">
+                  <div><span class="legend-key" style="background-color: #00ff00;"></span><span>Rendah</span></div>
+                  <div><span class="legend-key" style="background-color: #ffff00;"></span><span>Sedang</span></div>
+                  <div><span class="legend-key" style="background-color: #ff0000;"></span><span>Tinggi</span></div>
+
                 </div>
                 <!-- /.chart-responsive -->
               </div>
@@ -78,5 +75,8 @@
   </div>
   <!--/. container-fluid -->
 </section>
+<script src="{{ asset('js/leaflet.ajax.min.js') }}"></script>
+<script src="{{ asset('js/kecamatan_json.js') }}"></script>
+<script src="{{ asset('js/map.js') }}"></script>
 <!-- /.content -->
 @endsection

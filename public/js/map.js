@@ -1,37 +1,3 @@
-//Menampilkan Peta
-var map = L.map('mapid').setView([-7.118736, 112.416550], 11)
-
-var geojson;
-function resetHighlight(e) {
-    geojson.resetStyle(e.target);
-}
-
-function zoomToFeature(e) {
-    map.fitBounds(e.target.getBounds());
-}
-
-function highlightFeature(e) {
-    var layer = e.target;
-    layer.setStyle({
-        weight: 5,
-        color: '#666',
-        dashArray: '',
-        fillOpacity: 0.7
-    });
-
-    if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
-        layer.bringToFront();
-    }
-}
-
-function onEachFeature(feature, layer) {
-    layer.on({
-        mouseover: highlightFeature,
-        mouseout: resetHighlight,
-        click: zoomToFeature
-    });
-}
-
 function getColor(d) {
     if(d == 1){
         return '#ffff00';
@@ -43,62 +9,98 @@ function getColor(d) {
     return '#ff7800';
 }
 
-function style(feature) {
-    console.log(feature.properties.hasil);
-    return {
-        weight: 2,
-        opacity: 1,
-        color: 'white',
-        dashArray: '3',
-        fillOpacity: 0.7,
-        fillColor: getColor(feature.properties.hasil)
-    };
-}
-
 function arrayColumn(array, columnName) {
     return array.map(function(value,index) {
         return value[columnName];
     })
 }
-
-geojson = L.geoJson(kecamatan_data, {
-    style: style,
-    onEachFeature: onEachFeature
-}).addTo(map);
+var draw = {};
 
 $('#select-pilih-peta').change(function(){
-    geojson.remove(map);
-    if($(this).find(":selected").data('url') == '' || $(this).find(":selected").data('url') == undefined){
-        for(let _index in kecamatan_data.features){
-            kecamatan_data.features[_index].properties.hasil = -1;
-        }
-        geojson = L.geoJson(kecamatan_data, {
-            style: style,
-            onEachFeature: onEachFeature
-        }).addTo(map);
-        return false;
-    }
     $.ajax({
         type: "GET",
         url: $(this).find(":selected").data('url'),
         data: {},
         beforeSend: function() {
+            map.removeLayer('maine')
+            map.removeSource('maine')
         },
         complete:function() {
         },
         success: function(data){
-
+            // console.log('start', kecamatan_data.features)
             for(let _index_fahp in data){
                 let index = arrayColumn(kecamatan_data.features, 'id').indexOf(data[_index_fahp].id);
                 if(index != -1){
-                    kecamatan_data.features[index].properties.hasil =  data[_index_fahp].hasil;
+                    // console.log('start',kecamatan_data.features[index].properties.new_color)
+                    kecamatan_data.features[index].properties.new_color =  getColor(data[_index_fahp].hasil);
+                    // console.log('end',kecamatan_data.features[index].properties.new_color)
                 }
             }
-
-            geojson = L.geoJson(kecamatan_data, {
-                style: style,
-                onEachFeature: onEachFeature
-            }).addTo(map);
+            map.addSource('maine', {
+                'type': 'geojson',
+                'data': kecamatan_data
+            });
+            map.addLayer({
+                'id': 'maine',
+                'type': 'fill',
+                'source': 'maine', // reference the data source
+                'layout': {},
+                'paint': {
+                    
+                    'fill-opacity': 0.5
+                }
+            });
+            map.setPaintProperty('maine', 'fill-color', ['get', 'new_color']);        
         }
     });
 })
+mapboxgl.accessToken = 'pk.eyJ1IjoiZmlyeWFsemFod2EiLCJhIjoiY2tyYzVuOTZ0M2Z5eTJ3cno1d2ptOXZ6eSJ9.b8kigM8EySBANTLFVfMX3g';
+    var map = new mapboxgl.Map({
+        container: 'mapid', // container ID
+        style: 'mapbox://styles/mapbox/light-v10', // style URL
+        center: [112.416550, -7.118736], // starting position
+        zoom:9 // starting zoom
+    });
+
+    map.on('load', function () {
+        map.addSource('maine', {
+            'type': 'geojson',
+            'data': kecamatan_data
+        });
+
+        map.addLayer({
+            'id': 'maine',
+            'type': 'fill',
+            'source': 'maine', // reference the data source
+            'layout': {},
+            'paint': {
+                
+                'fill-opacity': 0.5
+            }
+        });
+
+        map.on('mousemove', function (e) {
+            var states = map.queryRenderedFeatures(e.point, {
+              layers: ['maine']
+            });
+  
+            if (states.length > 0) {
+              document.getElementById('pd').innerHTML =
+                '<h3><strong>' +
+                states[0].properties.Kecamatan +
+                '</strong></h3>' ;
+            } else {
+              document.getElementById('pd').innerHTML =
+                '<p>Hover over a state!</p>';
+            }
+          });
+        map.setPaintProperty('maine', 'fill-color', ['get', 'color']);
+    });
+    
+    map.on('draw.update', sourceRefresh);
+    function sourceRefresh(e) {
+        var data = draw.getAll();
+        console.log(draw)
+        map.getSource('maine').setData(data);
+    };
