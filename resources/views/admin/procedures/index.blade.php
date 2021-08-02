@@ -49,9 +49,9 @@
                                 <div id="collapseOne" class="collapse" role="tabpanel"
                                 aria-labelledby="headingOne">
                                 <div class="card-block">
-                                    @foreach(\App\DetailProcedure::query()->where('sop_id', $data[0]->id)->get() as $item)
+                                    @foreach($data[0]->detail_procedure as $item)
                                     <div class="card mb-n0">
-                                        <div class="card-body">{{ $item->tindakan }}</div>
+                                        <div class="card-body">{{ $item->Tindakan }}</div>
                                     </div>
                                     @endforeach
                                 </div>
@@ -74,9 +74,9 @@
                         <div id="collapseTwo" class="collapse" role="tabpanel"
                         aria-labelledby="headingTwo">
                         <div class="card-block">
-                            @foreach(\App\DetailProcedure::query()->where('sop_id', $data[1]->id)->get() as $item)
+                            @foreach($data[1]->detail_procedure as $item)
                             <div class="card">
-                                <div class="card-body">{{ $item->tindakan }}</div>
+                                <div class="card-body">{{ $item->Tindakan }}</div>
                             </div>
                             @endforeach
                         </div>
@@ -99,9 +99,9 @@
                 <div id="collapseThree" class="collapse" role="tabpanel"
                 aria-labelledby="headingThree">
                 <div class="card-block">
-                    @foreach(\App\DetailProcedure::query()->where('sop_id', $data[2]->id)->get() as $item)
+                    @foreach($data[2]->detail_procedure as $item)
                     <div class="card">
-                        <div class="card-body">{{ $item->tindakan }}</div>
+                        <div class="card-body">{{ $item->Tindakan }}</div>
                     </div>
                     @endforeach
                 </div>

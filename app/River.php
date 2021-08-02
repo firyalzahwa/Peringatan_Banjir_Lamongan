@@ -6,22 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class River extends Model
 {
-    public function district()
-    {
-        return $this->belongsTo('App\District');
-    }
+    public $timestamps = false;
 
-    public function getCreatedAtAttribute()
-    {
-        return \Carbon\Carbon::parse($this->attributes['created_at'])
-        ->format('d M Y H:i');
-    }
-
-    public function getUpdatedAtAttribute()
-    {
-        return \Carbon\Carbon::parse($this->attributes['created_at'])
-        ->format('d M Y H:i');
-    }
-
+    protected $fillable = [
+    	'id_dist',
+    	'kecamatan',
+    	'jum_sungai'
+    ];
     
+    public function district() {
+        return $this->hasMany('App\District');
+    }
+
+    public function rivers() {
+        return $this->hasMany('App\River');
+    }
 }

@@ -23,6 +23,7 @@ class VillagesController extends Controller
     {
 
         $villages = Village::orderBy('id','DESC')->paginate(10);
+        // json_encode($villages);
         return view('admin.villages.index', compact('villages'));
     }
 

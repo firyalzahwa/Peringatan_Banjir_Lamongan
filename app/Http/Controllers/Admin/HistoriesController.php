@@ -6,11 +6,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\History;
 use App\Village;
+use Illuminate\Support\Facades\DB;
+use App\Repository\RepositoryNaturalBreaks;
 
 class HistoriesController extends Controller
 {
-    public function __construct()
+    public function __construct(RepositoryNaturalBreaks $FNB)
     {
+        $this->natural_breaks=$FNB;
         $this->middleware('auth');
     }
     /**
@@ -115,5 +118,61 @@ class HistoriesController extends Controller
     {
         History::destroy($id);
         return redirect()->route('admin.histories.index');
+    }
+
+    public function history_map()
+    {
+        $histories = DB::table('histories')->select('dist_id', DB::raw('SUM(kepala_keluarga) as kepala_keluarga'))->groupBy('dist_id')->where('dist_id', '>', 0)->get();
+        $data = [];
+        foreach($histories as $history){
+            $data[$history->dist_id] = $history->kepala_keluarga;
+        }
+        // dd($data);
+        sort($data);
+        $breaks= $this->natural_breaks->getBreaks( $data, 3 );
+        $cls = 1;
+        $from = $data[ 0 ];
+        $prices = array_unique( $data );
+        sort( $prices );
+        // dd($breaks);
+        
+        $data_compare = [];
+         foreach( $prices as $i => $price ) {
+             if( $price >= $breaks[ $cls ] ) {
+                 $count = 0;
+                 foreach( $data as $p ) {
+                     if( $p >= $from && $p <= $price ) {
+                         $count++;
+                     }
+                 }
+                 $data_compare[] = [
+                     'from' => $from,
+                     'to' => $price
+                 ];
+                 if( isset( $prices[ $i + 1 ] ) ) {
+                     $from = $prices[ $i + 1 ];
+                 }
+                 $cls++;
+             }
+         }
+        //  dd($data);
+        $res = [];
+        foreach($histories as $history){
+            $res[] = [
+                'id' => $history->dist_id,
+                'hasil' => $this->compare_fahp($data_compare, $data[($history->dist_id -1)], 0, count($data_compare))
+            ];
+        }
+        return response()->json($res);
+    }
+    private function compare_fahp($data_compare, $fahp, $current, $end){
+        if($current >= $end){
+            return false;
+        }
+        if(($data_compare[$current]['from'] <= $fahp) && ($fahp <= $data_compare[$current]['to'])){
+            return $current;
+        }else{
+            return $this->compare_fahp($data_compare, $fahp, $current +1 , $end);
+        }
     }
 }

@@ -8,7 +8,7 @@ use GuzzleHttp\Client;
 class Village extends Model
 {
     public $timestamps = false;
-    protected $table = 'villages';
+    protected $table = 'village';
 
     protected $appends = [
         'history_category',
@@ -16,7 +16,8 @@ class Village extends Model
         'reservoir_average', 'reservoir_category',
         'population_category', 'population_value',
         'landheight_category', 'landheight_value',
-        'river_category', 'river_value',
+        // 'river_category', 
+        'river_value',
     ];
 
     // protected $hidden = [
@@ -143,42 +144,41 @@ class Village extends Model
     //6. Parameter Tinggi Sungai
     public function getRiverValueAttribute()
     {
-        // $river = River::where(['district_id' => $this->district_id])->get();
+        // $river = River::where(['id_dist' => $this->id_dist])->get();
 
         // $getLatestUpdateDate = River::orderBy('tanggal', 'DESC')->first();
 
         // $rivers = River::where('tanggal', $getLatestUpdateDate->tanggal)->get();
 
-        $rivers = River::where('district_id', $this->district_id)->get();
+        $rivers = River::where('id_dist')->get();
 
         $rivers = $rivers->avg('tinggi');
 
         return $rivers;
     }
 
-    public function getRiverCategoryAttribute()
-    {
-
-        if ($this->district->title === 'Karangbinangun') {
-            if ($this->river_value <= 2) return 'rendah';
-            if ($this->river_value > 2 && $this->river_value <= 2.5) return 'sedang';
-            if ($this->river_value >  2.5) return 'tinggi';
-        } else if ($this->district->title === 'Babat') {
-            if ($this->river_value <= 7.5) return 'rendah';
-            if ($this->river_value > 7.5 && $this->river_value <= 8) return 'sedang';
-            if ($this->river_value >  8) return 'tinggi';
-        } else if ($this->district->title === 'Karanggeneng') {
-            if ($this->river_value <= 4) return 'rendah';
-            if ($this->river_value > 4.5 && $this->river_value <= 5) return 'sedang';
-            if ($this->river_value > 5) return 'tinggi';
-        } else if ($this->district->title === 'Laren') {
-            if ($this->river_value <= 5) return 'rendah';
-            if ($this->river_value > 5 && $this->river_value <= 5.5) return 'sedang';
-            if ($this->river_value > 5.5) return 'tinggi';
-        } else {
-            return 'rendah';
-        }
-    }
+    // public function getRiverCategoryAttribute()
+    // {
+    //     if ($this->district->title === 'Karangbinangun') {
+    //         if ($this->river_value <= 2) return 'rendah';
+    //         if ($this->river_value > 2 && $this->river_value <= 2.5) return 'sedang';
+    //         if ($this->river_value >  2.5) return 'tinggi';
+    //     } else if ($this->district->title === 'Babat') {
+    //         if ($this->river_value <= 7.5) return 'rendah';
+    //         if ($this->river_value > 7.5 && $this->river_value <= 8) return 'sedang';
+    //         if ($this->river_value >  8) return 'tinggi';
+    //     } else if ($this->district->title === 'Karanggeneng') {
+    //         if ($this->river_value <= 4) return 'rendah';
+    //         if ($this->river_value > 4.5 && $this->river_value <= 5) return 'sedang';
+    //         if ($this->river_value > 5) return 'tinggi';
+    //     } else if ($this->district->title === 'Laren') {
+    //         if ($this->river_value <= 5) return 'rendah';
+    //         if ($this->river_value > 5 && $this->river_value <= 5.5) return 'sedang';
+    //         if ($this->river_value > 5.5) return 'tinggi';
+    //     } else {
+    //         return 'rendah';
+    //     }
+    // }
 
     //7. Parameter Cuaca
     public static function getWeather()

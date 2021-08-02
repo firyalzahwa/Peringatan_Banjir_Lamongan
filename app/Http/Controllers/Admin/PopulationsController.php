@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Village;
 use App\Population;
+use Illuminate\Support\Facades\DB;
 
 class PopulationsController extends Controller
 {
@@ -20,9 +21,10 @@ class PopulationsController extends Controller
      */
     public function index()
     {
-        $population = Population::orderBy('id','DESC')->with('procedure')->paginate(10);
+        $population = Population::groupBy('dist_id')->selectRaw('populations.*, SUM(total) as total')->where('dist_id', '>', 0)->paginate(10);
+        // dd($population);
         return view('admin.populations.index', compact('population'));
-    }
+    }   
 
     /**
      * Show the form for creating a new resource.
@@ -31,7 +33,7 @@ class PopulationsController extends Controller
      */
     public function create()
     {
-        $arr['villages'] = Village::all();
+        $arr['district'] = District::all();
         return view('admin.populations.create')->with($arr);
     }
 
@@ -43,7 +45,7 @@ class PopulationsController extends Controller
      */
     public function store(Request $request, Population $population)
     {
-        $population->village_id = $request->village_id;
+        $population->dist_id = $request->dist_id;
         $population->total = $request->total;
         $population->save();
         return redirect()->route('admin.populations.index');

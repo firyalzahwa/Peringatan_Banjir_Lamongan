@@ -20,8 +20,8 @@ class RiversController extends Controller
      */
     public function index()
     {
-        $rivers = River::orderBy('id','DESC')->paginate(10);
-        return view('admin.rivers.index', compact('rivers'));
+        $river = River::orderBy('id_dist','DESC')-> paginate(10);
+        return view('admin.rivers.index', compact('river'));
     }
 
     /**
@@ -31,8 +31,7 @@ class RiversController extends Controller
      */
     public function create()
     {
-        $arr['districts'] = District::whereIn('id',[1,7,8,12])->get();
-        return view('admin.rivers.create')->with($arr);
+        return view('admin.river.create');
     }
 
     /**
@@ -43,9 +42,9 @@ class RiversController extends Controller
      */
     public function store(Request $request, River $river)
     {
-        $river->district_id = $request->district_id;
-        $river->tanggal = $request->tanggal;
-        $river->tinggi = $request->tinggi;
+        $river->id_dist = $request->id_dist;
+        $river->kecamatan = $request->kecamatan;
+        $river->jum_sungai = $request->jum_sungai;
         $river->save();
         return redirect()->route('admin.rivers.index');
     }
@@ -56,7 +55,7 @@ class RiversController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id_dist)
     {
         //
     }
@@ -70,7 +69,6 @@ class RiversController extends Controller
     public function edit(River $river)
     {
         $arr['river'] = $river;
-        $arr['districts'] = District::whereIn('id',[1,7,8,12])->get();
         return view('admin.rivers.edit')->with($arr);
     }
 
@@ -83,9 +81,9 @@ class RiversController extends Controller
      */
     public function update(Request $request, River $river)
     {
-        $river->district_id = $request->district_id;
-        $river->tanggal = $request->tanggal;
-        $river->tinggi = $request->tinggi;
+        $river->id_dist = $request->id_dist;
+        $river->kecamatan = $request->kecamatan;
+        $river->jum_sungai = $request->jum_sungai;
         $river->save();
         return redirect()->route('admin.rivers.index');
     }
@@ -96,9 +94,9 @@ class RiversController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id_dist)
     {
-        River::destroy($id);
+        River::destroy($id_dist);
         return redirect()->route('admin.rivers.index');
     }
 }
