@@ -42,4 +42,5 @@ Route::get('/histori', 'Admin\HistoriesController@history_map')->name('histoty_m
 Route::get('/ahp', 'Admin\AHPController@perhitunganAHP')->name('ahp');;
 Route::get('/fahp', 'Admin\FAhpController@fahp')->name('fahp');
 Route::get('/get_json_fahp', 'Admin\FAhpController@get_json')->name('get_json_fahp');
+Route::get('/detail_procedure', 'ProcedureAPIController@index')->name('detail_procedure');
 

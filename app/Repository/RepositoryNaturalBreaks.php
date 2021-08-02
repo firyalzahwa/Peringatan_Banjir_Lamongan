@@ -105,7 +105,7 @@ class RepositoryNaturalBreaks {
 		sort( $data );
 
 		$matrices = self::getMatrices($data, $numClasses);
-        // dd($matrices);
+        //dd($matrices);
 		$lowerClassLimits = $matrices[ 'lowerClassLimits' ];
 
 		return self::_getBreaks($data, $lowerClassLimits, $numClasses);
