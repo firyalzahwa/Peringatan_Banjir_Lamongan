@@ -1,3 +1,4 @@
+var map;
 function getColor(d) {
     if(d == 1){
         return '#ffff00';
@@ -16,7 +17,54 @@ function arrayColumn(array, columnName) {
 }
 var draw = {};
 
+function gantiPeta(){
+    console.log("gantiPeta="+ $('#select-pilih-peta').find(":selected").data('url'))
+    map = new mapboxgl.Map({
+        container: 'mapid', // container ID
+        style: 'mapbox://styles/mapbox/light-v10', // style URL
+        center: [112.416550, -7.118736], // starting position
+        zoom:9 // starting zoom
+    });
+    $.ajax({
+        type: "GET",
+        url: $('#select-pilih-peta').find(":selected").data('url'),
+        data: {},
+        beforeSend: function() {
+            map.removeLayer('maine')
+            map.removeSource('maine')
+        },
+        complete:function() {
+        },
+        success: function(data){
+            // console.log('start', kecamatan_data.features)
+            for(let _index_fahp in data){
+                let index = arrayColumn(kecamatan_data.features, 'id').indexOf(data[_index_fahp].id);
+                if(index != -1){
+                    // console.log('start',kecamatan_data.features[index].properties.new_color)
+                    kecamatan_data.features[index].properties.new_color =  getColor(data[_index_fahp].hasil);
+                    // console.log('end',kecamatan_data.features[index].properties.new_color)
+                }
+            }
+            map.addSource('maine', {
+                'type': 'geojson',
+                'data': kecamatan_data
+            });
+            map.addLayer({
+                'id': 'maine',
+                'type': 'fill',
+                'source': 'maine', // reference the data source
+                'layout': {},
+                'paint': {
+                    
+                    'fill-opacity': 0.5
+                }
+            });
+            map.setPaintProperty('maine', 'fill-color', ['get', 'new_color']);        
+        }
+    });
+}
 $('#select-pilih-peta').change(function(){
+    console.log("petaMetode="+ $(this).find(":selected").data('url'))
     $.ajax({
         type: "GET",
         url: $(this).find(":selected").data('url'),
@@ -56,7 +104,7 @@ $('#select-pilih-peta').change(function(){
     });
 })
 mapboxgl.accessToken = 'pk.eyJ1IjoiZmlyeWFsemFod2EiLCJhIjoiY2tyYzVuOTZ0M2Z5eTJ3cno1d2ptOXZ6eSJ9.b8kigM8EySBANTLFVfMX3g';
-    var map = new mapboxgl.Map({
+    map = new mapboxgl.Map({
         container: 'mapid', // container ID
         style: 'mapbox://styles/mapbox/light-v10', // style URL
         center: [112.416550, -7.118736], // starting position

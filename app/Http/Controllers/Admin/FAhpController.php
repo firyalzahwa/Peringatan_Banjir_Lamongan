@@ -336,6 +336,18 @@ class FAhpController extends Controller {
             $history = $data_histories[$dist->id] ?? 0;
             $weather = $decodedData->main->temp * $normalisasiBobotVektor[5]['w'];
             $data[($dist->id -1)] = (int)($populate + $reservoir + $river + $landheight + $history + $weather);
+
+            // Insert Results to fahp table
+            DB::table('FAHP')->insert([
+                'dist_id'=>$dist->id,
+                'populations'=>$populate,
+                'reservoirs'=>$reservoir,
+                'rivers'=>$river,
+                'landheights'=>$landheight,
+                'histories'=>$history,
+                'weather'=>$weather,
+                'total'=> $data[($dist->id -1)]
+            ]);
         }
         sort($data);
         $breaks= $this->natural_breaks->getBreaks( $data, 3 );
@@ -344,7 +356,7 @@ class FAhpController extends Controller {
         $prices = array_unique( $data );
         sort( $prices );
         // dd($breaks);
-        
+
         $data_compare = [];
          foreach( $prices as $i => $price ) {
              if( $price >= $breaks[ $cls ] ) {

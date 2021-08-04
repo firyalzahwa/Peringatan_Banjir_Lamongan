@@ -61,13 +61,16 @@ class RepositoryNaturalBreaks {
 							$varianceCombinations[ $l ][ $j ] = $variance + $varianceCombinations[ $i4 ][ $j - 1 ];
 						}
 					}
+					// dd($varianceCombinations);
+					// return '';
 				}
 			}
 
 			$lowerClassLimits[ $l ][ 1 ] = 1;
 			$varianceCombinations[ $l ][ 1 ] = $variance;
 		}
-
+		// dd($variance);
+		// return '';
 		return array(
 			'lowerClassLimits' => $lowerClassLimits,
 			'varianceCombinations' => $varianceCombinations
@@ -77,7 +80,7 @@ class RepositoryNaturalBreaks {
 
 	static private function _getBreaks($data, $lowerClassLimits, $numClasses) {
 		$k = sizeof( $data ) - 1;
-        // dd($k);
+        //dd($k);
 		$kclass = array_fill(0, $numClasses + 1, 0);
 		$countNum = $numClasses;
 
@@ -95,6 +98,10 @@ class RepositoryNaturalBreaks {
 			$countNum--;
 		}
 		return $kclass;
+		//  dd($kclass);
+		//  return '';
+		// dd($countNum);
+		// return '';
 	}
 
 	static public function getBreaks($data, $numClasses) {

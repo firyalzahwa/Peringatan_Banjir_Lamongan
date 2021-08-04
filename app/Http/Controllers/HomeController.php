@@ -21,13 +21,33 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
         $path = asset('js/kecamatan_json2.js');
         // $strJsonFileContents = file_get_contents($path);
         // dd($strJsonFileContents);
         // $data_fahp = $this->fahp();
-        return view('home');
+        if(isset($request->android)){
+            $jenis_peta='';
+            if($jenis_peta != ''){   
+            $jenis_peta=$request->jenis;
+            return view('android_map',['jenis'=>$jenis_peta]);  
+            }
+            else{
+                $jenis_peta='Peta Rawan F AHP';
+                return view('android_map',['jenis'=>$jenis_peta]);
+            } 
+        }
+        else{
+            return view('home');
+        }
+    }
+    public function riwayat(Request $request)
+    {
+        if(isset($request->android)){
+            $peta_riwayat=$request->riwayat;
+            return view ('and_riwayat_map',['riwayat'=>$peta_riwayat]);
+        }
     }
 
     private function fahp() {

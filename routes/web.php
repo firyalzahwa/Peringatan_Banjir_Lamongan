@@ -22,6 +22,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/admin', 'HomeController@index')->name('home');
+Route::get('/riwayat', 'HomeController@riwayat')->name('riwayat');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/admin/map/petabanjir', 'Admin\VisualisasiMapController@get_petabanjir');
 // Route::get('/admin/map/rawanbanjir', 'Admin\VisualisasiMapController@get_rawanbanjir')->name('map.rawanbanjir');
