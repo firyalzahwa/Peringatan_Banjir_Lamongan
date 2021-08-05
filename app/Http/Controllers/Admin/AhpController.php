@@ -234,7 +234,7 @@ class AHPController extends Controller
       $from = $data[ 0 ];
       $prices = array_unique( $data );
       sort( $prices );
-      dd($breaks);
+      //dd($breaks);
       
       $data_compare = [];
         foreach( $prices as $i => $price ) {
