@@ -229,11 +229,12 @@ class AHPController extends Controller
       // dd($data);
       sort($data);
       $breaks= $this->natural_breaks->getBreaks( $data, 3 );
-      //dd($breaks);
+      dd($breaks);
       $cls = 1;
       $from = $data[ 0 ];
       $prices = array_unique( $data );
       sort( $prices );
+      dd($breaks);
       
       $data_compare = [];
         foreach( $prices as $i => $price ) {

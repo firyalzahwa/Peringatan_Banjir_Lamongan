@@ -40,7 +40,7 @@
                 <div id="mapid" style="width: 100%; height: 600px"></div>
                 <div class="map-overlay" id="features">
                   <h2>Kecamatan Kabupaten Lamongan</h2>
-                  <div id="pd"><p>Hover over a state!</p></div>
+                  <div id="pd"><p>Legenda</p></div>
                 </div>
                 <div class="map-overlay" id="legend">
                   <div><span class="legend-key" style="background-color: #00ff00;"></span><span>Rendah</span></div>
